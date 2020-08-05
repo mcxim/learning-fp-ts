@@ -25,5 +25,33 @@ export const timeDo = <A>(effect: IO<A>) =>
     .doL(({ start, end }) => log(`timeDo elapsed: ${end - start}`))
     .return(({ result }) => result);
 
-time(log(fibonacci(40)))();
-timeDo(log(fibonacci(40)))();
+// time(log(fibonacci(40)))();
+// timeDo(log(fibonacci(40)))();
+
+const io1 = io.map(
+  () => {
+    console.log("starting fibonaccei on io1");
+    let ans = fibonacci(40);
+    console.log("ending fibonacci on io1");
+    return ans;
+  },
+  () => 1
+);
+
+const io2 = io.map(
+  () => {
+    console.log("starting fibonaccei on io2");
+    let ans = fibonacci(40);
+    console.log("ending fibonacci on io2");
+    return ans;
+  },
+  () => 2
+);
+
+const testing = Do(io)
+  .bind("one", io1)
+  .bind("two", io2)
+  .do(log("after one and two"))
+  .done();
+
+io.chain(testing, log)();

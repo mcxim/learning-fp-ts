@@ -1,5 +1,4 @@
 // Recreating my older Haskell hangman (./hangman.hs) in fp-ts.
-
 import * as I from "fp-ts/lib/IO";
 import { IO } from "fp-ts/lib/IO";
 import * as A from "fp-ts/lib/Array";
@@ -142,7 +141,7 @@ const gameWin = ({ word, discovered }: Puzzle): IO<void> => () => {
 
 const runGame = (puzzle: Puzzle): IO<void> => () => {
   gameWin(puzzle)();
-  gameOver(puzzle);
+  gameOver(puzzle)();
   showPuzzle(puzzle)();
   let guess = readlineSync.question("Guess a letter: ");
   pipe(
